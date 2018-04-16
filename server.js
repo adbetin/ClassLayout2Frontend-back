@@ -46,6 +46,12 @@ function handleError(res, reason, message, code) {
  *    POST: creates a new article
  */
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
 app.get("/api/articles", function (req, res) {
     var urlquery = req.query;
     var query = {};
@@ -102,7 +108,7 @@ app.post("/api/articles", function (req, res) {
  *    DELETE: deletes article by id
  */
 
-app.get("/api/article/:id", function (req, res) {
+app.get("/api/articles/:id", function (req, res) {
     db.collection(ARTICLE_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function (err, doc) {
         if (err) {
             handleError(res, err.message, "Failed to get article");
@@ -112,7 +118,7 @@ app.get("/api/article/:id", function (req, res) {
     });
 });
 
-app.put("/api/article/:id", function (req, res) {
+app.put("/api/articles/:id", function (req, res) {
     var updateDoc = req.body;
     delete updateDoc._id;
 
@@ -126,7 +132,7 @@ app.put("/api/article/:id", function (req, res) {
     });
 });
 
-app.delete("/api/article/:id", function (req, res) {
+app.delete("/api/articles/:id", function (req, res) {
     db.collection(ARTICLE_COLLECTION).deleteOne({ _id: new ObjectID(req.params.id) }, function (err, result) {
         if (err) {
             handleError(res, err.message, "Failed to delete article");
