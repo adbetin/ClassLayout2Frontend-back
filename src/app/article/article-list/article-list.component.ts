@@ -39,7 +39,7 @@ export class ArticleListComponent implements OnInit {
       });
   }
 
-  private getIndexOfArticle = (articleId: String) => {
+  private getIndexOfArticle = (articleId: string) => {
     return this.articles.findIndex((article) => {
       return article._id === articleId;
     });
@@ -56,7 +56,7 @@ export class ArticleListComponent implements OnInit {
     this.selectarticle(article);
   }
 
-  deleteArticle = (articleId: String) => {
+  deleteArticle = (articleId: string) => {
     var idx = this.getIndexOfArticle(articleId);
     if (idx !== -1) {
       this.articles.splice(idx, 1);

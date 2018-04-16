@@ -29,10 +29,10 @@ export class ArticleService {
   // get("/api/Articles/:id") endpoint not used by Angular app
 
   // delete("/api/Articles/:id")
-  deleteArticle(delArticleId: String): Promise<void | String> {
+  deleteArticle(delArticleId: string): Promise<void | string> {
     return this.http.delete(this.ArticlesUrl + '/' + delArticleId)
       .toPromise()
-      .then(response => response.json() as String)
+      .then(response => response.json() as string)
       .catch(this.handleError);
   }
 

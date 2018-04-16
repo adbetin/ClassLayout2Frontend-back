@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule} from '@angular/material';
+import { MatTableModule, MatInputModule, MatFormFieldModule, MatSelectModule} from '@angular/material';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
-import { ArticleFormComponent } from './article-form/article-form.component';
-import { ArticleAdminComponent } from './article-admin/article-admin.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
-    CommonModule, MatTableModule
+    CommonModule, FormsModule, 
+    MatTableModule, MatInputModule, MatFormFieldModule, MatSelectModule
   ],
-  declarations: [ArticleListComponent, ArticleDetailComponent, ArticleFormComponent, ArticleAdminComponent], 
-  exports: [ArticleListComponent, ArticleDetailComponent, ArticleFormComponent, ArticleAdminComponent]
+  declarations: [ArticleListComponent, ArticleDetailComponent], 
+  exports: [ArticleListComponent, ArticleDetailComponent]
 })
 export class ArticleModule { }

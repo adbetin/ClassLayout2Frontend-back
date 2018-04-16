@@ -4,6 +4,8 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
 var ARTICLE_COLLECTION = "articles";
+var ARTICLE_CATEGORY_COLLECTION = "articleCategories";
+var BRANDS_COLLECTION = "brands";
 
 var app = express();
 app.use(bodyParser.json());
@@ -55,23 +57,10 @@ app.use(function(req, res, next) {
 app.get("/api/articles", function (req, res) {
     var urlquery = req.query;
     var query = {};
-    var starsFilter = urlquery.stars;
     var nameFilter = urlquery.name;
-
-    if (!!starsFilter) {
-        query.stars = 1;
-    }
 
     if (!!nameFilter) {
         query.name = { "$regex": ".*" + nameFilter + ".*", "$options": "i" }
-    }
-
-    if (!!starsFilter) {
-        if (starsFilter.constructor === Array) {
-            query.stars = { $in: starsFilter.map(Number) }
-        } else {
-            query.stars = { $in: [Number(starsFilter)] }
-        }
     }
 
     console.log("query", query);
@@ -138,6 +127,49 @@ app.delete("/api/articles/:id", function (req, res) {
             handleError(res, err.message, "Failed to delete article");
         } else {
             res.status(200).json(req.params.id);
+        }
+    });
+});
+
+
+app.get("/api/articlecategories", function (req, res) {
+    var urlquery = req.query;
+    var query = {};
+    var nameFilter = urlquery.name;
+
+    if (!!nameFilter) {
+        query.name = { "$regex": ".*" + nameFilter + ".*", "$options": "i" }
+    }
+
+    console.log("query", query);
+
+    db.collection(ARTICLE_CATEGORY_COLLECTION).find(query).toArray(function (err, docs) {
+        if (err) {
+            console.log(err);
+            handleError(res, err.message, "Failed to get article collections.");
+        } else {
+            res.status(200).json(docs);
+        }
+    });
+});
+
+app.get("/api/brands", function (req, res) {
+    var urlquery = req.query;
+    var query = {};
+    var nameFilter = urlquery.name;
+
+    if (!!nameFilter) {
+        query.name = { "$regex": ".*" + nameFilter + ".*", "$options": "i" }
+    }
+
+    console.log("query", query);
+
+    db.collection(BRANDS_COLLECTION).find(query).toArray(function (err, docs) {
+        if (err) {
+            console.log(err);
+            handleError(res, err.message, "Failed to get brands.");
+        } else {
+            res.status(200).json(docs);
         }
     });
 });

@@ -1,3 +1,39 @@
-<p>
-  article-detail works!
-</p>
+<div *ngIf="article" class="row">
+  <div class="col-md-12">
+    <h3 *ngIf="article._id">Detalle de articulo</h3>
+    <h3 *ngIf="!article._id">Nuevo articulo</h3>
+  </div>
+</div>
+<div *ngIf="article" class="row">
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Nombre" name="article-name" [(ngModel)]="article.name">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Descripcion" name="article-description" [(ngModel)]="article.description">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Codigo" name="article-code" [(ngModel)]="article.code">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Imagen" name="article-image" [(ngModel)]="article.image">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(value)]="article.articleCategory">
+        <mat-option *ngFor="let ac of articleCategories" [value]="ac">
+          {{ ac.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select [(value)]="article.brand">
+          <mat-option *ngFor="let brand of brands" [value]="brand">
+            {{ brand.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <button class="btn btn-primary" *ngIf="!article._id" (click)="createArticle(article)">Crear</button>
+    <button class="btn btn-info" *ngIf="article._id" (click)="updateArticle(article)">Actualizar</button>
+    <button class="btn btn-danger" *ngIf="article._id" (click)="deleteArticle(article._id)">Eliminar</button>
+  </form>
+</div>
